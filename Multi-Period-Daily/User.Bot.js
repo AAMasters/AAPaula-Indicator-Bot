@@ -701,7 +701,7 @@
                                                             begin: undefined,
                                                             end: undefined,
                                                             direction: undefined,
-                                                            periodCount: 0,
+                                                            period: 0,
                                                             firstMin: 0,
                                                             firstMax: 0,
                                                             lastMin: 0,
@@ -709,7 +709,7 @@
                                                         };
 
                                                         channel.direction = currentBand.direction;
-                                                        channel.periodCount = 2;
+                                                        channel.period = 2;
 
                                                         channel.begin = currentBand.begin;
                                                         channel.end = nextBand.end;
@@ -741,7 +741,7 @@
 
                                                     } else {
 
-                                                        channel.periodCount++;
+                                                        channel.period++;
                                                         channel.end = nextBand.end;
                                                         channel.close = nextBand.close;
 
@@ -856,7 +856,7 @@
                                                             channel.begin + "," +
                                                             channel.end + "," +
                                                             '"' + channel.direction + '"' + "," +
-                                                            channel.periodCount + "," +
+                                                            channel.period + "," +
                                                             channel.firstMin + "," +
                                                             channel.firstMax + "," +
                                                             channel.lastMin + "," +

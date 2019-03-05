@@ -235,7 +235,7 @@
                                                                     begin: undefined,
                                                                     end: undefined,
                                                                     direction: undefined,
-                                                                    periodCount: 0,
+                                                                    period: 0,
                                                                     firstMovingAverage: 0,
                                                                     lastMovingAverage: 0,
                                                                     firstDeviation: 0,
@@ -243,7 +243,7 @@
                                                                 };
 
                                                                 channel.direction = currentBand.direction;
-                                                                channel.periodCount = 2;
+                                                                channel.period = 2;
 
                                                                 channel.begin = currentBand.begin;
                                                                 channel.end = nextBand.end;
@@ -256,7 +256,7 @@
 
                                                             } else {
 
-                                                                channel.periodCount++;
+                                                                channel.period++;
                                                                 channel.end = nextBand.end;
                                                                 channel.lastMovingAverage = nextBand.movingAverage;
                                                                 channel.lastDeviation = nextBand.deviation;
@@ -273,7 +273,7 @@
                                                                 channel = {};
 
                                                                 channel.direction = currentBand.direction;
-                                                                channel.periodCount = 1;
+                                                                channel.period = 1;
 
                                                                 channel.begin = currentBand.begin;
                                                                 channel.end = currentBand.end;
@@ -318,7 +318,7 @@
                                                             channel.begin + "," +
                                                             channel.end + "," +
                                                             '"' + channel.direction + '"' + "," +
-                                                            channel.periodCount + "," +
+                                                            channel.period + "," +
                                                             channel.firstMovingAverage + "," +
                                                             channel.lastMovingAverage + "," +
                                                             channel.firstDeviation + "," +
@@ -398,7 +398,7 @@
                                                                     end: undefined,
                                                                     direction: undefined,
                                                                     slope: undefined,
-                                                                    periodCount: 0,
+                                                                    period: 0,
                                                                     firstMovingAverage: 0,
                                                                     lastMovingAverage: 0,
                                                                     firstDeviation: 0,
@@ -407,7 +407,7 @@
 
                                                                 channel.direction = currentBand.direction;
                                                                 channel.slope = currentBand.slope;
-                                                                channel.periodCount = 2;
+                                                                channel.period = 2;
 
                                                                 channel.begin = currentBand.begin;
                                                                 channel.end = nextBand.end;
@@ -420,7 +420,7 @@
 
                                                             } else {
 
-                                                                channel.periodCount++;
+                                                                channel.period++;
                                                                 channel.end = nextBand.end;
                                                                 channel.lastMovingAverage = nextBand.movingAverage;
                                                                 channel.lastDeviation = nextBand.deviation;
@@ -438,7 +438,7 @@
 
                                                                 channel.direction = currentBand.direction;
                                                                 channel.slope = currentBand.slope;
-                                                                channel.periodCount = 1;
+                                                                channel.period = 1;
 
                                                                 channel.begin = currentBand.begin;
                                                                 channel.end = currentBand.end;
@@ -484,7 +484,7 @@
                                                             channel.end + "," +
                                                             '"' + channel.direction + '"' + "," +
                                                             '"' + channel.slope + '"' + "," +
-                                                            channel.periodCount + "," +
+                                                            channel.period + "," +
                                                             channel.firstMovingAverage + "," +
                                                             channel.lastMovingAverage + "," +
                                                             channel.firstDeviation + "," +
