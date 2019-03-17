@@ -54,7 +54,7 @@
         }
     }
 
-    function start(dataFiles, outputPeriod, timePeriod, currentDate, callBackFunction) {
+    function start(dataFiles, timePeriod, outputPeriodLabel, currentDay, callBackFunction) {
 
         try {
 
@@ -69,9 +69,9 @@
 
             dataFile = dataFiles[0]; // We only need the bollinger bands.
 
-            commons.buildBandsArray(dataFile, bands);
-            commons.buildChannels(bands, channels);
-            commons.buildSubChannels(bands, subChannels);
+            commons.buildBandsArray(dataFile, bands, timePeriod, callBackFunction);
+            commons.buildChannels(bands, channels, callBackFunction);
+            commons.buildSubChannels(bands, subChannels, callBackFunction);
 
             writeChannelsFile();
 
@@ -92,7 +92,7 @@
 
                         /* Will only add to the file the records of the current day */
 
-                        if (channel.begin < currentDate.valueOf()) { continue; }
+                        if (channel.begin < currentDay.valueOf()) { continue; }
 
                         fileContent = fileContent + separator + '[' +
 
@@ -113,10 +113,11 @@
 
                     fileContent = "[" + fileContent + "]";
 
+                    let dateForPath = currentDay.getUTCFullYear() + '/' + utilities.pad(currentDay.getUTCMonth() + 1, 2) + '/' + utilities.pad(currentDay.getUTCDate(), 2);
                     let fileName = '' + market.assetA + '_' + market.assetB + '.json';
 
                     let filePathRoot = bot.devTeam + "/" + bot.codeName + "." + bot.version.major + "." + bot.version.minor + "/" + global.PLATFORM_CONFIG.codeName + "." + global.PLATFORM_CONFIG.version.major + "." + global.PLATFORM_CONFIG.version.minor + "/" + global.EXCHANGE_NAME + "/" + bot.dataSetVersion;
-                    let filePath = filePathRoot + "/Output/" + BOLLINGER_CHANNELS_FOLDER_NAME + "/" + "Multi-Period-Daily" + "/" + timePeriod;
+                    let filePath = filePathRoot + "/Output/" + BOLLINGER_CHANNELS_FOLDER_NAME + "/" + "Multi-Period-Daily" + "/" + outputPeriodLabel + "/" + dateForPath;
 
                     thisBotStorage.createTextFile(filePath, fileName, fileContent + '\n', onFileCreated);
 
@@ -168,6 +169,10 @@
 
                         let channel = subChannels[i];
 
+                        /* Will only add to the file the records of the current day */
+
+                        if (channel.begin < currentDay.valueOf()) { continue; }
+
                         fileContent = fileContent + separator + '[' +
 
                             channel.begin + "," +
@@ -188,10 +193,11 @@
 
                     fileContent = "[" + fileContent + "]";
 
+                    let dateForPath = currentDay.getUTCFullYear() + '/' + utilities.pad(currentDay.getUTCMonth() + 1, 2) + '/' + utilities.pad(currentDay.getUTCDate(), 2);
                     let fileName = '' + market.assetA + '_' + market.assetB + '.json';
 
                     let filePathRoot = bot.devTeam + "/" + bot.codeName + "." + bot.version.major + "." + bot.version.minor + "/" + global.PLATFORM_CONFIG.codeName + "." + global.PLATFORM_CONFIG.version.major + "." + global.PLATFORM_CONFIG.version.minor + "/" + global.EXCHANGE_NAME + "/" + bot.dataSetVersion;
-                    let filePath = filePathRoot + "/Output/" + BOLLINGER_SUB_CHANNELS_FOLDER_NAME + "/" + "Multi-Period-Daily" + "/" + timePeriod;
+                    let filePath = filePathRoot + "/Output/" + BOLLINGER_SUB_CHANNELS_FOLDER_NAME + "/" + "Multi-Period-Daily" + "/" + outputPeriodLabel + "/" + dateForPath;
 
                     thisBotStorage.createTextFile(filePath, fileName, fileContent + '\n', onFileCreated);
 

@@ -115,8 +115,8 @@
 
                             if (FULL_LOG === true) { logger.write(MODULE_NAME, "[INFO] start -> buildBollingerChannels -> loopBody -> Entering function."); }
 
-                            const outputPeriod = global.marketFilesPeriods[n][0];
-                            const timePeriod = global.marketFilesPeriods[n][1];
+                            const timePeriod = global.marketFilesPeriods[n][0];
+                            const outputPeriodLabel = global.marketFilesPeriods[n][1];
 
                             nextBandFile();
 
@@ -129,7 +129,7 @@
                                     let fileName = market.assetA + '_' + market.assetB + ".json";
 
                                     let filePathRoot = bot.devTeam + "/" + "AAChris" + "." + bot.version.major + "." + bot.version.minor + "/" + global.PLATFORM_CONFIG.codeName + "." + global.PLATFORM_CONFIG.version.major + "." + global.PLATFORM_CONFIG.version.minor + "/" + global.EXCHANGE_NAME + "/" + bot.dataSetVersion;
-                                    let filePath = filePathRoot + "/Output/" + BOLLINGER_BANDS_FOLDER_NAME + "/" + "Multi-Period-Market" + "/" + timePeriod;
+                                    let filePath = filePathRoot + "/Output/" + BOLLINGER_BANDS_FOLDER_NAME + "/" + "Multi-Period-Market" + "/" + outputPeriodLabel;
 
                                     chrisStorage.getTextFile(filePath, fileName, onFileReceived, true);
 
@@ -163,10 +163,10 @@
                                                 try {
 
                                                     let lastMovingAverage = 0;
-                                                    const SIDE_TOLERANCE = 0.5 * outputPeriod / ONE_DAY_IN_MILISECONDS;
-                                                    const SMALL_SLOPE = 1.0 * outputPeriod / ONE_DAY_IN_MILISECONDS;
-                                                    const MEDIUM_SLOPE = 2.0 * outputPeriod / ONE_DAY_IN_MILISECONDS;
-                                                    const HIGH_SLOPE = 4.0 * outputPeriod / ONE_DAY_IN_MILISECONDS;
+                                                    const SIDE_TOLERANCE = 0.5 * timePeriod / ONE_DAY_IN_MILISECONDS;
+                                                    const SMALL_SLOPE = 1.0 * timePeriod / ONE_DAY_IN_MILISECONDS;
+                                                    const MEDIUM_SLOPE = 2.0 * timePeriod / ONE_DAY_IN_MILISECONDS;
+                                                    const HIGH_SLOPE = 4.0 * timePeriod / ONE_DAY_IN_MILISECONDS;
 
                                                     for (let i = 0; i < marketFile.length; i++) {
 
@@ -335,7 +335,7 @@
                                                     let fileName = '' + market.assetA + '_' + market.assetB + '.json';
 
                                                     let filePathRoot = bot.devTeam + "/" + bot.codeName + "." + bot.version.major + "." + bot.version.minor + "/" + global.PLATFORM_CONFIG.codeName + "." + global.PLATFORM_CONFIG.version.major + "." + global.PLATFORM_CONFIG.version.minor + "/" + global.EXCHANGE_NAME + "/" + bot.dataSetVersion;
-                                                    let filePath = filePathRoot + "/Output/" + BOLLINGER_CHANNELS_FOLDER_NAME + "/" + "Multi-Period-Market" + "/" + timePeriod;
+                                                    let filePath = filePathRoot + "/Output/" + BOLLINGER_CHANNELS_FOLDER_NAME + "/" + "Multi-Period-Market" + "/" + outputPeriodLabel;
 
                                                     paulaStorage.createTextFile(filePath, fileName, fileContent + '\n', onFileCreated);
 
@@ -501,7 +501,7 @@
                                                     let fileName = '' + market.assetA + '_' + market.assetB + '.json';
 
                                                     let filePathRoot = bot.devTeam + "/" + bot.codeName + "." + bot.version.major + "." + bot.version.minor + "/" + global.PLATFORM_CONFIG.codeName + "." + global.PLATFORM_CONFIG.version.major + "." + global.PLATFORM_CONFIG.version.minor + "/" + global.EXCHANGE_NAME + "/" + bot.dataSetVersion;
-                                                    let filePath = filePathRoot + "/Output/" + BOLLINGER_SUB_CHANNELS_FOLDER_NAME + "/" + "Multi-Period-Market" + "/" + timePeriod;
+                                                    let filePath = filePathRoot + "/Output/" + BOLLINGER_SUB_CHANNELS_FOLDER_NAME + "/" + "Multi-Period-Market" + "/" + outputPeriodLabel;
 
                                                     paulaStorage.createTextFile(filePath, fileName, fileContent + '\n', onFileCreated);
 

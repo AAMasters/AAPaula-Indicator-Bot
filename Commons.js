@@ -5,6 +5,7 @@
 
     const MODULE_NAME = "Commons";
     const GMT_SECONDS = ':00.000 GMT+0000';
+    const ONE_DAY_IN_MILISECONDS = 24 * 60 * 60 * 1000;
 
     let thisObject = {
         buildBandsArray: buildBandsArray,
@@ -17,15 +18,15 @@
 
     return thisObject;
 
-    function buildBandsArray(dataFile, bands) {
+    function buildBandsArray(dataFile, bands, timePeriod, callBackFunction) {
 
         try {
 
             let lastMovingAverage = 0;
-            const SIDE_TOLERANCE = 0.5 * outputPeriod / ONE_DAY_IN_MILISECONDS;
-            const SMALL_SLOPE = 1.0 * outputPeriod / ONE_DAY_IN_MILISECONDS;
-            const MEDIUM_SLOPE = 2.0 * outputPeriod / ONE_DAY_IN_MILISECONDS;
-            const HIGH_SLOPE = 4.0 * outputPeriod / ONE_DAY_IN_MILISECONDS;
+            const SIDE_TOLERANCE = 0.5 * timePeriod / ONE_DAY_IN_MILISECONDS;
+            const SMALL_SLOPE = 1.0 * timePeriod / ONE_DAY_IN_MILISECONDS;
+            const MEDIUM_SLOPE = 2.0 * timePeriod / ONE_DAY_IN_MILISECONDS;
+            const HIGH_SLOPE = 4.0 * timePeriod / ONE_DAY_IN_MILISECONDS;
 
             for (let i = 0; i < dataFile.length; i++) {
 
@@ -60,16 +61,13 @@
 
                 lastMovingAverage = band.movingAverage;
             }
-
-            findChannels();
-
         }
         catch (err) {
             callBackFunction(global.DEFAULT_FAIL_RESPONSE);
         }
     }
 
-    function buildChannels(bands, channels) {
+    function buildChannels(bands, channels, callBackFunction) {
 
         if (FULL_LOG === true) { logger.write(MODULE_NAME, "[INFO] buildChannels -> Entering function."); }
 
@@ -152,7 +150,7 @@
         }
     }
 
-    function buildSubChannels(bands, subChannels) {
+    function buildSubChannels(bands, subChannels, callBackFunction) {
 
         if (FULL_LOG === true) { logger.write(MODULE_NAME, "[INFO] buildSubChannels -> Entering function."); }
 
