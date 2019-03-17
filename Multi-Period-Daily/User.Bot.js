@@ -2,6 +2,7 @@
 
     const FULL_LOG = true;
     const LOG_FILE_CONTENT = false;
+    const ONE_DAY_IN_MILISECONDS = 24 * 60 * 60 * 1000;
 
     const MODULE_NAME = "User Bot";
 
@@ -90,9 +91,19 @@
 
                         let channel = channels[i];
 
-                        /* Will only add to the file the records of the current day */
+                        /* 
+                            Here we have an special problem that occurs when an object spans several time peridos. If not taken care of
+                            it can happen that the object gets splitted between 2 days, which we dont want since it would loose some of
+                            its properties.
 
-                        if (channel.begin < currentDay.valueOf()) { continue; }
+                            To solve this issue, we wont save objects which ends at the last candle of the day, because we will save it
+                            at the next day, in whole, even if it starts in the previous day.
+                        */
+
+                        let lastInstantOdDay = currentDay.valueOf() + ONE_DAY_IN_MILISECONDS - 1;
+
+                        if (channel.end < currentDay.valueOf() - 1) { continue; }
+                        if (channel.end === lastInstantOdDay) { continue; } 
 
                         fileContent = fileContent + separator + '[' +
 
@@ -169,9 +180,19 @@
 
                         let channel = subChannels[i];
 
-                        /* Will only add to the file the records of the current day */
+                        /* 
+                            Here we have an special problem that occurs when an object spans several time peridos. If not taken care of
+                            it can happen that the object gets splitted between 2 days, which we dont want since it would loose some of
+                            its properties.
 
-                        if (channel.begin < currentDay.valueOf()) { continue; }
+                            To solve this issue, we wont save objects which ends at the last candle of the day, because we will save it
+                            at the next day, in whole, even if it starts in the previous day.
+                        */
+
+                        let lastInstantOdDay = currentDay.valueOf() + ONE_DAY_IN_MILISECONDS - 1;
+                         
+                        if (channel.end < currentDay.valueOf() - 1) { continue; }
+                        if (channel.end === lastInstantOdDay) { continue; } 
 
                         fileContent = fileContent + separator + '[' +
 
