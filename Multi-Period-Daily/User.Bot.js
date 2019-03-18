@@ -55,7 +55,7 @@
         }
     }
 
-    function start(dataFiles, timePeriod, outputPeriodLabel, currentDay, callBackFunction) {
+    function start(dataFiles, timePeriod, outputPeriodLabel, currentDay, startDate, endDate, callBackFunction) {
 
         try {
 
