@@ -6,8 +6,6 @@
 
     const MODULE_NAME = "User Bot";
 
-    const EXCHANGE_NAME = "Poloniex";
-
     const BOLLINGER_CHANNELS_FOLDER_NAME = "Bollinger-Channels";
     const BOLLINGER_SUB_CHANNELS_FOLDER_NAME = "Bollinger-Sub-Channels";
 
