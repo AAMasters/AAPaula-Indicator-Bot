@@ -158,6 +158,7 @@
             "displayName": "Bollinger-Channels",
             "description": "Two sets of files per period that contains band-channel patterns.",
             "storageAccount": "aatom",
+      	    "shareWith": "Public",
             "dataSets": [
               {
                 "codeName": "Multi-Period-Market",
@@ -197,6 +198,7 @@
             "displayName": "Bollinger-Sub-Channels",
             "description": "Bollinger Sub Channels with slope.",
             "storageAccount": "aatom",
+            "shareWith": "Public",
             "dataSets": [
               {
                 "codeName": "Multi-Period-Market",
