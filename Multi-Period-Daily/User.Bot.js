@@ -1,4 +1,4 @@
-﻿exports.newUserBot = function newUserBot(bot, logger, COMMONS, UTILITIES, BLOB_STORAGE, FILE_STORAGE) {
+﻿exports.newUserBot = function newUserBot(bot, logger, COMMONS, UTILITIES, fileStorage) {
 
     const FULL_LOG = true;
     const LOG_FILE_CONTENT = false;
@@ -17,7 +17,6 @@
     };
 
     let utilities = UTILITIES.newCloudUtilities(bot, logger);
-    let thisBotStorage = BLOB_STORAGE.newBlobStorage(bot, logger);
 
     let dataDependencies;
 
@@ -33,20 +32,8 @@
             if (FULL_LOG === true) { logger.write(MODULE_NAME, "[INFO] initialize -> Entering function."); }
 
             dataDependencies = pDataDependencies;
+            callBackFunction(global.DEFAULT_OK_RESPONSE);
 
-            thisBotStorage.initialize(bot.devTeam, onStorageInizialized);
-
-            function onStorageInizialized(err) {
-
-                if (err.result === global.DEFAULT_OK_RESPONSE.result) {
-
-                    callBackFunction(global.DEFAULT_OK_RESPONSE);
-
-                } else {
-                    logger.write(MODULE_NAME, "[ERROR] initializeStorage -> onStorageInizialized -> err = " + err.message);
-                    callBackFunction(err);
-                }
-            }
         } catch (err) {
             logger.write(MODULE_NAME, "[ERROR] initialize -> err = " + err.message);
             callBackFunction(global.DEFAULT_FAIL_RESPONSE);
@@ -89,7 +76,7 @@
 
                         let channel = channels[i];
 
-                        /* 
+                        /*
                             Here we have an special problem that occurs when an object spans several time peridos. If not taken care of
                             it can happen that the object gets splitted between 2 days, which we dont want since it would loose some of
                             its properties.
@@ -101,7 +88,7 @@
                         let lastInstantOdDay = currentDay.valueOf() + ONE_DAY_IN_MILISECONDS - 1;
 
                         if (channel.end < currentDay.valueOf() - 1) { continue; }
-                        if (channel.end === lastInstantOdDay) { continue; } 
+                        if (channel.end === lastInstantOdDay) { continue; }
 
                         fileContent = fileContent + separator + '[' +
 
@@ -125,10 +112,11 @@
                     let dateForPath = currentDay.getUTCFullYear() + '/' + utilities.pad(currentDay.getUTCMonth() + 1, 2) + '/' + utilities.pad(currentDay.getUTCDate(), 2);
                     let fileName = '' + market.assetA + '_' + market.assetB + '.json';
 
-                    let filePathRoot = bot.devTeam + "/" + bot.codeName + "." + bot.version.major + "." + bot.version.minor + "/" + global.PLATFORM_CONFIG.codeName + "." + global.PLATFORM_CONFIG.version.major + "." + global.PLATFORM_CONFIG.version.minor + "/" + global.EXCHANGE_NAME + "/" + bot.dataSetVersion;
+                    let filePathRoot = bot.devTeam + "/" + bot.codeName + "." + bot.version.major + "." + bot.version.minor + "/" + global.CLONE_EXECUTOR.codeName + "." + global.CLONE_EXECUTOR.version + "/" + global.EXCHANGE_NAME + "/" + bot.dataSetVersion;
                     let filePath = filePathRoot + "/Output/" + BOLLINGER_CHANNELS_FOLDER_NAME + "/" + "Multi-Period-Daily" + "/" + outputPeriodLabel + "/" + dateForPath;
+                    filePath += '/' + fileName
 
-                    thisBotStorage.createTextFile(filePath, fileName, fileContent + '\n', onFileCreated);
+                    fileStorage.createTextFile(bot.devTeam, filePath, fileContent + '\n', onFileCreated);
 
                     function onFileCreated(err) {
 
@@ -178,7 +166,7 @@
 
                         let channel = subChannels[i];
 
-                        /* 
+                        /*
                             Here we have an special problem that occurs when an object spans several time peridos. If not taken care of
                             it can happen that the object gets splitted between 2 days, which we dont want since it would loose some of
                             its properties.
@@ -188,9 +176,9 @@
                         */
 
                         let lastInstantOdDay = currentDay.valueOf() + ONE_DAY_IN_MILISECONDS - 1;
-                         
+
                         if (channel.end < currentDay.valueOf() - 1) { continue; }
-                        if (channel.end === lastInstantOdDay) { continue; } 
+                        if (channel.end === lastInstantOdDay) { continue; }
 
                         fileContent = fileContent + separator + '[' +
 
@@ -215,10 +203,11 @@
                     let dateForPath = currentDay.getUTCFullYear() + '/' + utilities.pad(currentDay.getUTCMonth() + 1, 2) + '/' + utilities.pad(currentDay.getUTCDate(), 2);
                     let fileName = '' + market.assetA + '_' + market.assetB + '.json';
 
-                    let filePathRoot = bot.devTeam + "/" + bot.codeName + "." + bot.version.major + "." + bot.version.minor + "/" + global.PLATFORM_CONFIG.codeName + "." + global.PLATFORM_CONFIG.version.major + "." + global.PLATFORM_CONFIG.version.minor + "/" + global.EXCHANGE_NAME + "/" + bot.dataSetVersion;
+                    let filePathRoot = bot.devTeam + "/" + bot.codeName + "." + bot.version.major + "." + bot.version.minor + "/" + global.CLONE_EXECUTOR.codeName + "." + global.CLONE_EXECUTOR.version + "/" + global.EXCHANGE_NAME + "/" + bot.dataSetVersion;
                     let filePath = filePathRoot + "/Output/" + BOLLINGER_SUB_CHANNELS_FOLDER_NAME + "/" + "Multi-Period-Daily" + "/" + outputPeriodLabel + "/" + dateForPath;
+                    filePath += '/' + fileName
 
-                    thisBotStorage.createTextFile(filePath, fileName, fileContent + '\n', onFileCreated);
+                    fileStorage.createTextFile(bot.devTeam, filePath, fileContent + '\n', onFileCreated);
 
                     function onFileCreated(err) {
 

@@ -13,8 +13,6 @@
         buildSubChannels: buildSubChannels
     };
 
-    let utilities = UTILITIES.newCloudUtilities(bot, logger);
-
     return thisObject;
 
     function buildBandsArray(dataFile, bands, timePeriod, callBackFunction) {
