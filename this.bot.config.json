@@ -37,6 +37,13 @@
       "retryWaitTime": 10000,
       "sleepWaitTime": 3600000,
       "comaWaitTime": 86400000,
+      "framework": {
+        "name": "Multi-Period-Market",
+        "startDate": {
+        },
+        "endDate": {
+        }
+      },
       "statusDependencies": [
         {
           "devTeam": "AAMasters",
@@ -47,6 +54,19 @@
           },
           "process": "Multi-Period-Market",
           "dataSetVersion": "dataSet.V1"
+        }
+      ],
+      "dataDependencies": [
+        {
+          "devTeam": "AAMasters",
+          "bot": "AAChris",
+          "botVersion": {
+            "major": 1,
+            "minor": 0
+          },
+          "product": "Bollinger-Bands",
+          "dataSetVersion": "dataSet.V1",
+          "dataSet": "Multi-Period-Market"
         }
       ]
     },
@@ -76,6 +96,15 @@
       "retryWaitTime": 10000,
       "sleepWaitTime": 3600000,
       "comaWaitTime": 86400000,
+      "framework": {
+        "name": "Multi-Period-Daily",
+        "startDate": {
+          "takeItFromStatusDependency": 0
+        },
+        "endDate": {
+          "takeItFromStatusDependency": 1
+        }
+      },
       "statusDependencies": [
         {
           "devTeam": "AAMasters",
@@ -84,7 +113,7 @@
             "major": 1,
             "minor": 0
           },
-          "process": "Poloniex-Historic-Trades",
+          "process": "Historic-Trades",
           "dataSetVersion": "dataSet.V1"
         },
         {
@@ -107,84 +136,105 @@
           "process": "Multi-Period-Daily",
           "dataSetVersion": "dataSet.V1"
         }
+      ],
+      "dataDependencies": [
+        {
+          "devTeam": "AAMasters",
+          "bot": "AAChris",
+          "botVersion": {
+            "major": 1,
+            "minor": 0
+          },
+          "product": "Bollinger-Bands",
+          "dataSetVersion": "dataSet.V1",
+          "dataSet": "Multi-Period-Daily"
+        }
       ]
     }
   ],
-  "products": [
-    {
-      "codeName": "Bollinger-Channels",
-      "displayName": "Bollinger-Channels",
-      "description": "Two sets of files per period that contains band-channel patterns.",
-      "storageAccount": "aatom",
-      "dataSets": [
-        {
-          "codeName": "Multi-Period-Market",
-          "type": "Market Files",
-          "validPeriods": [ "24-hs", "12-hs", "08-hs", "06-hs", "04-hs", "03-hs", "02-hs", "01-hs" ],
-          "filePath": "AAMasters/AAPaula.1.0/AACloud.1.1/@Exchange/dataSet.V1/Output/Bollinger-Channels/Multi-Period-Market/@Period",
-          "fileName": "@AssetA_@AssetB.json"
-        },
-        {
-          "codeName": "Multi-Period-Daily",
-          "type": "Daily Files",
-          "validPeriods": [ "45-min", "40-min", "30-min", "20-min", "15-min", "10-min", "05-min", "04-min", "03-min", "02-min", "01-min" ],
-          "filePath": "AAMasters/AAPaula.1.0/AACloud.1.1/@Exchange/dataSet.V1/Output/Bollinger-Channels/Multi-Period-Daily/@Period/@Year/@Month/@Day",
-          "fileName": "@AssetA_@AssetB.json",
-          "dataRange": {
-            "filePath": "AAMasters/AAPaula.1.0/AACloud.1.1/@Exchange/dataSet.V1/Output/Bollinger-Channels/Multi-Period-Daily",
-            "fileName": "Data.Range.@AssetA_@AssetB.json"
+        "products": [
+          {
+            "codeName": "Bollinger-Channels",
+            "displayName": "Bollinger-Channels",
+            "description": "Two sets of files per period that contains band-channel patterns.",
+            "storageAccount": "aatom",
+      	    "shareWith": "Public",
+            "dataSets": [
+              {
+                "codeName": "Multi-Period-Market",
+                "type": "Market Files",
+                "validPeriods": [ "24-hs", "12-hs", "08-hs", "06-hs", "04-hs", "03-hs", "02-hs", "01-hs" ],
+                "filePath": "AAMasters/AAPaula.1.0/AACloud.1.1/@Exchange/dataSet.V1/Output/Bollinger-Channels/Multi-Period-Market/@Period",
+                "fileName": "@AssetA_@AssetB.json"
+              },
+              {
+                "codeName": "Multi-Period-Daily",
+                "type": "Daily Files",
+                "validPeriods": [ "45-min", "40-min", "30-min", "20-min", "15-min", "10-min", "05-min", "04-min", "03-min", "02-min", "01-min" ],
+                "filePath": "AAMasters/AAPaula.1.0/AACloud.1.1/@Exchange/dataSet.V1/Output/Bollinger-Channels/Multi-Period-Daily/@Period/@Year/@Month/@Day",
+                "fileName": "@AssetA_@AssetB.json",
+                "dataRange": {
+                  "filePath": "AAMasters/AAPaula.1.0/AACloud.1.1/@Exchange/dataSet.V1/Output/Bollinger-Channels/Multi-Period-Daily",
+                  "fileName": "Data.Range.@AssetA_@AssetB.json"
+                }
+              }
+            ],
+            "exchangeList": [
+              {
+                "name": "Poloniex"
+              },
+              {
+                "name": "Coss"
+              }
+            ],
+            "plotter": {
+              "devTeam": "AAMasters",
+              "codeName": "PlottersBollingerChannels",
+              "moduleName": "BollingerChannels"
+            }
+          },
+          {
+            "codeName": "Bollinger-Sub-Channels",
+            "displayName": "Bollinger-Sub-Channels",
+            "description": "Bollinger Sub Channels with slope.",
+            "storageAccount": "aatom",
+            "shareWith": "Public",
+            "dataSets": [
+              {
+                "codeName": "Multi-Period-Market",
+                "type": "Market Files",
+                "validPeriods": [ "24-hs", "12-hs", "08-hs", "06-hs", "04-hs", "03-hs", "02-hs", "01-hs" ],
+                "filePath": "AAMasters/AAPaula.1.0/AACloud.1.1/@Exchange/dataSet.V1/Output/Bollinger-Sub-Channels/Multi-Period-Market/@Period",
+                "fileName": "@AssetA_@AssetB.json"
+              },
+              {
+                "codeName": "Multi-Period-Daily",
+                "type": "Daily Files",
+                "validPeriods": [ "45-min", "40-min", "30-min", "20-min", "15-min", "10-min", "05-min", "04-min", "03-min", "02-min", "01-min" ],
+                "filePath": "AAMasters/AAPaula.1.0/AACloud.1.1/@Exchange/dataSet.V1/Output/Bollinger-Sub-Channels/Multi-Period-Daily/@Period/@Year/@Month/@Day",
+                "fileName": "@AssetA_@AssetB.json",
+                "dataRange": {
+                  "filePath": "AAMasters/AAPaula.1.0/AACloud.1.1/@Exchange/dataSet.V1/Output/Bollinger-Sub-Channels/Multi-Period-Daily",
+                  "fileName": "Data.Range.@AssetA_@AssetB.json"
+                }
+              }
+            ],
+            "exchangeList": [
+              {
+                "name": "Poloniex"
+              },
+              {
+                "name": "Coss"
+              }
+            ],
+            "plotter": {
+              "devTeam": "AAMasters",
+              "codeName": "PlottersBollingerChannels",
+              "moduleName": "BollingerSubChannels"
+            }
           }
-        }
-      ],
-      "exchangeList": [
-        {
-          "name": "Poloniex"
-        }
-      ],
-      "plotter": {
-        "devTeam": "AAMasters",
-        "codeName": "PlottersBollingerChannels",
-        "moduleName": "BollingerChannels"
+        ]
       }
-    },
-    {
-      "codeName": "Bollinger-Sub-Channels",
-      "displayName": "Bollinger-Sub-Channels",
-      "description": "Bollinger Sub Channels with slope.",
-      "storageAccount": "aatom",
-      "dataSets": [
-        {
-          "codeName": "Multi-Period-Market",
-          "type": "Market Files",
-          "validPeriods": [ "24-hs", "12-hs", "08-hs", "06-hs", "04-hs", "03-hs", "02-hs", "01-hs" ],
-          "filePath": "AAMasters/AAPaula.1.0/AACloud.1.1/@Exchange/dataSet.V1/Output/Bollinger-Sub-Channels/Multi-Period-Market/@Period",
-          "fileName": "@AssetA_@AssetB.json"
-        },
-        {
-          "codeName": "Multi-Period-Daily",
-          "type": "Daily Files",
-          "validPeriods": [ "45-min", "40-min", "30-min", "20-min", "15-min", "10-min", "05-min", "04-min", "03-min", "02-min", "01-min" ],
-          "filePath": "AAMasters/AAPaula.1.0/AACloud.1.1/@Exchange/dataSet.V1/Output/Bollinger-Sub-Channels/Multi-Period-Daily/@Period/@Year/@Month/@Day",
-          "fileName": "@AssetA_@AssetB.json",
-          "dataRange": {
-            "filePath": "AAMasters/AAPaula.1.0/AACloud.1.1/@Exchange/dataSet.V1/Output/Bollinger-Sub-Channels/Multi-Period-Daily",
-            "fileName": "Data.Range.@AssetA_@AssetB.json"
-          }
-        }
-      ],
-      "exchangeList": [
-        {
-          "name": "Poloniex"
-        }
-      ],
-      "plotter": {
-        "devTeam": "AAMasters",
-        "codeName": "PlottersBollingerChannels",
-        "moduleName": "BollingerSubChannels"
-      }
-    }
-  ]
-}
 
 
 
