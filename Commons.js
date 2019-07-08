@@ -72,50 +72,82 @@
 
             let channel;
 
-            for (let i = 0; i < bands.length - 1; i++) {
+            for (let i = 0; i < bands.length; i++) {
 
                 let currentBand = bands[i];
-                let nextBand = bands[i + 1];
+                let nextBand;
 
-                if (
-                    currentBand.direction === nextBand.direction) {
+                if (i < bands.length - 1) {
+                    nextBand = bands[i + 1];
 
-                    if (channel === undefined) {
+                    if (
+                        currentBand.direction === nextBand.direction) {
 
-                        channel = {
-                            begin: undefined,
-                            end: undefined,
-                            direction: undefined,
-                            period: 0,
-                            firstMovingAverage: 0,
-                            lastMovingAverage: 0,
-                            firstDeviation: 0,
-                            lastDeviation: 0
-                        };
+                        if (channel === undefined) {
 
-                        channel.direction = currentBand.direction;
-                        channel.period = 2;
+                            channel = {
+                                begin: undefined,
+                                end: undefined,
+                                direction: undefined,
+                                period: 0,
+                                firstMovingAverage: 0,
+                                lastMovingAverage: 0,
+                                firstDeviation: 0,
+                                lastDeviation: 0
+                            };
 
-                        channel.begin = currentBand.begin;
-                        channel.end = nextBand.end;
+                            channel.direction = currentBand.direction;
+                            channel.period = 2;
 
-                        channel.firstMovingAverage = currentBand.movingAverage;
-                        channel.lastMovingAverage = nextBand.movingAverage;
+                            channel.begin = currentBand.begin;
+                            channel.end = nextBand.end;
 
-                        channel.firstDeviation = currentBand.deviation;
-                        channel.lastDeviation = nextBand.deviation;
+                            channel.firstMovingAverage = currentBand.movingAverage;
+                            channel.lastMovingAverage = nextBand.movingAverage;
 
+                            channel.firstDeviation = currentBand.deviation;
+                            channel.lastDeviation = nextBand.deviation;
+
+                        } else {
+
+                            channel.period++;
+                            channel.end = nextBand.end;
+                            channel.lastMovingAverage = nextBand.movingAverage;
+                            channel.lastDeviation = nextBand.deviation;
+
+                        }
                     } else {
 
-                        channel.period++;
-                        channel.end = nextBand.end;
-                        channel.lastMovingAverage = nextBand.movingAverage;
-                        channel.lastDeviation = nextBand.deviation;
+                        if (channel !== undefined) {
+                            channels.push(channel);
+                            channel = undefined;
+                        } else {
+                            /* The channel has only one period */
 
+                            channel = {};
+
+                            channel.direction = currentBand.direction;
+                            channel.period = 1;
+
+                            channel.begin = currentBand.begin;
+                            channel.end = currentBand.end;
+
+                            channel.firstMovingAverage = currentBand.movingAverage;
+                            channel.lastMovingAverage = currentBand.movingAverage;
+
+                            channel.firstDeviation = currentBand.deviation;
+                            channel.lastDeviation = currentBand.deviation;
+
+                            channels.push(channel);
+                            channel = undefined;
+                        }
                     }
                 } else {
-
                     if (channel !== undefined) {
+                        channel.period++;
+                        channel.end = currentBand.end;
+                        channel.lastMovingAverage = currentBand.movingAverage;
+                        channel.lastDeviation = currentBand.deviation;
                         channels.push(channel);
                         channel = undefined;
                     } else {
@@ -155,53 +187,87 @@
 
             let channel;
 
-            for (let i = 0; i < bands.length - 1; i++) {
+            for (let i = 0; i < bands.length; i++) {
 
                 let currentBand = bands[i];
-                let nextBand = bands[i + 1];
+                let nextBand;
 
-                if (
-                    currentBand.direction === nextBand.direction &&
-                    currentBand.slope === nextBand.slope) {
+                if (i < bands.length - 1) {
+                    nextBand = bands[i + 1];
 
-                    if (channel === undefined) {
+                    if (
+                        currentBand.direction === nextBand.direction &&
+                        currentBand.slope === nextBand.slope) {
 
-                        channel = {
-                            begin: undefined,
-                            end: undefined,
-                            direction: undefined,
-                            slope: undefined,
-                            period: 0,
-                            firstMovingAverage: 0,
-                            lastMovingAverage: 0,
-                            firstDeviation: 0,
-                            lastDeviation: 0
-                        };
+                        if (channel === undefined) {
 
-                        channel.direction = currentBand.direction;
-                        channel.slope = currentBand.slope;
-                        channel.period = 2;
+                            channel = {
+                                begin: undefined,
+                                end: undefined,
+                                direction: undefined,
+                                slope: undefined,
+                                period: 0,
+                                firstMovingAverage: 0,
+                                lastMovingAverage: 0,
+                                firstDeviation: 0,
+                                lastDeviation: 0
+                            };
 
-                        channel.begin = currentBand.begin;
-                        channel.end = nextBand.end;
+                            channel.direction = currentBand.direction;
+                            channel.slope = currentBand.slope;
+                            channel.period = 2;
 
-                        channel.firstMovingAverage = currentBand.movingAverage;
-                        channel.lastMovingAverage = nextBand.movingAverage;
+                            channel.begin = currentBand.begin;
+                            channel.end = nextBand.end;
 
-                        channel.firstDeviation = currentBand.deviation;
-                        channel.lastDeviation = nextBand.deviation;
+                            channel.firstMovingAverage = currentBand.movingAverage;
+                            channel.lastMovingAverage = nextBand.movingAverage;
 
+                            channel.firstDeviation = currentBand.deviation;
+                            channel.lastDeviation = nextBand.deviation;
+
+                        } else {
+
+                            channel.period++;
+                            channel.end = nextBand.end;
+                            channel.lastMovingAverage = nextBand.movingAverage;
+                            channel.lastDeviation = nextBand.deviation;
+
+                        }
                     } else {
 
-                        channel.period++;
-                        channel.end = nextBand.end;
-                        channel.lastMovingAverage = nextBand.movingAverage;
-                        channel.lastDeviation = nextBand.deviation;
+                        if (channel !== undefined) {
+                            subChannels.push(channel);
+                            channel = undefined;
+                        } else {
+                            /* The channel has only one period */
 
+                            channel = {};
+
+                            channel.direction = currentBand.direction;
+                            channel.slope = currentBand.slope;
+                            channel.period = 1;
+
+                            channel.begin = currentBand.begin;
+                            channel.end = currentBand.end;
+
+                            channel.firstMovingAverage = currentBand.movingAverage;
+                            channel.lastMovingAverage = currentBand.movingAverage;
+
+                            channel.firstDeviation = currentBand.deviation;
+                            channel.lastDeviation = currentBand.deviation;
+
+                            subChannels.push(channel);
+                            channel = undefined;
+                        }
                     }
-                } else {
 
+                } else {
                     if (channel !== undefined) {
+                        channel.period++;
+                        channel.end = currentBand.end;
+                        channel.lastMovingAverage = currentBand.movingAverage;
+                        channel.lastDeviation = currentBand.deviation;
                         subChannels.push(channel);
                         channel = undefined;
                     } else {
