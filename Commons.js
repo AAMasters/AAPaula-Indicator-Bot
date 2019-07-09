@@ -10,6 +10,7 @@
     let thisObject = {
         buildBandsArray: buildBandsArray,
         buildChannels: buildChannels,
+        buildStandardChannels: buildStandardChannels,
         buildSubChannels: buildSubChannels
     };
 
@@ -175,6 +176,42 @@
         }
         catch (err) {
             logger.write(MODULE_NAME, "[ERROR] buildChannels -> err = " + err.message);
+            callBackFunction(global.DEFAULT_FAIL_RESPONSE);
+        }
+    }
+
+    function buildStandardChannels(bands, standardChannels, callBackFunction) {
+
+        if (FULL_LOG === true) { logger.write(MODULE_NAME, "[INFO] buildStandardChannels -> Entering function."); }
+
+        try {
+
+            let period = 1
+
+            for (let i = 1; i < bands.length; i++) {
+
+                let channel;
+                let currentBand = bands[i];
+                let previousBand = bands[i - 1];
+
+                if (currentBand.direction === previousBand.direction) {
+                    period++
+                } else {
+                    period = 1
+                }
+
+                channel = {
+                    begin: currentBand.begin,
+                    end: currentBand.end,
+                    direction: currentBand.direction,
+                    period: period
+                };
+
+                standardChannels.push(channel)
+            }
+        }
+        catch (err) {
+            logger.write(MODULE_NAME, "[ERROR] buildStandardChannels -> err = " + err.message);
             callBackFunction(global.DEFAULT_FAIL_RESPONSE);
         }
     }

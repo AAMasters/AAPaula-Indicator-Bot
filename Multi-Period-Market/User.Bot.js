@@ -7,6 +7,7 @@
     const MODULE_NAME = "User Bot";
 
     const BOLLINGER_CHANNELS_FOLDER_NAME = "Bollinger-Channels";
+    const BOLLINGER_STANDARD_CHANNELS_FOLDER_NAME = "Bollinger-Standard-Channels";
     const BOLLINGER_SUB_CHANNELS_FOLDER_NAME = "Bollinger-Sub-Channels";
 
     const commons = COMMONS.newCommons(bot, logger, UTILITIES);
@@ -49,12 +50,14 @@
 
             let bands = [];
             let channels = [];
+            let standardChannels = [];
             let subChannels = [];
 
             dataFile = dataFiles[0]; // We only need the bollinger bands.
 
             commons.buildBandsArray(dataFile, bands, timePeriod, callBackFunction);
             commons.buildChannels(bands, channels, callBackFunction);
+            commons.buildStandardChannels(bands, standardChannels, callBackFunction);
             commons.buildSubChannels(bands, subChannels, callBackFunction);
 
             writeChannelsFile();
@@ -119,7 +122,7 @@
 
                             }
 
-                            writeSubChannelsFile();
+                            writeStandardChannelsFile();
 
                         }
                         catch (err) {
@@ -130,6 +133,77 @@
                 }
                 catch (err) {
                     logger.write(MODULE_NAME, "[ERROR] start -> writeChannelsFile -> err = " + err.message);
+                    callBackFunction(global.DEFAULT_FAIL_RESPONSE);
+                }
+            }
+
+            function writeStandardChannelsFile() {
+
+                try {
+
+                    if (FULL_LOG === true) { logger.write(MODULE_NAME, "[INFO] start -> writeStandardChannelsFile -> Entering function."); }
+
+                    let separator = "";
+                    let fileRecordCounter = 0;
+
+                    let fileContent = "";
+
+                    for (i = 0; i < standardChannels.length; i++) {
+
+                        let channel = standardChannels[i];
+
+                        fileContent = fileContent + separator + '[' +
+
+                            channel.begin + "," +
+                            channel.end + "," +
+                            '"' + channel.direction + '"' + "," +
+                            channel.period + "]";
+
+                        if (separator === "") { separator = ","; }
+
+                        fileRecordCounter++;
+
+                    }
+
+                    fileContent = "[" + fileContent + "]";
+
+                    let fileName = '' + market.assetA + '_' + market.assetB + '.json';
+
+                    let filePathRoot = bot.devTeam + "/" + bot.codeName + "." + bot.version.major + "." + bot.version.minor + "/" + global.CLONE_EXECUTOR.codeName + "." + global.CLONE_EXECUTOR.version + "/" + global.EXCHANGE_NAME + "/" + bot.dataSetVersion;
+                    let filePath = filePathRoot + "/Output/" + BOLLINGER_STANDARD_CHANNELS_FOLDER_NAME + "/" + "Multi-Period-Market" + "/" + outputPeriodLabel;
+                    filePath += '/' + fileName
+
+                    fileStorage.createTextFile(bot.devTeam, filePath, fileContent + '\n', onFileCreated);
+
+                    function onFileCreated(err) {
+
+                        try {
+
+                            if (FULL_LOG === true) { logger.write(MODULE_NAME, "[INFO] start -> writeStandardChannelsFile -> onFileCreated -> Entering function."); }
+                            if (LOG_FILE_CONTENT === true) { logger.write(MODULE_NAME, "[INFO] start -> writeStandardChannelsFile -> onFileCreated -> fileContent = " + fileContent); }
+
+                            if (err.result !== global.DEFAULT_OK_RESPONSE.result) {
+
+                                logger.write(MODULE_NAME, "[ERROR] start -> writeStandardChannelsFile -> onFileCreated -> err = " + err.message);
+                                logger.write(MODULE_NAME, "[ERROR] start -> writeStandardChannelsFile -> onFileCreated -> filePath = " + filePath);
+                                logger.write(MODULE_NAME, "[ERROR] start -> writeStandardChannelsFile -> onFileCreated -> market = " + market.assetA + "_" + market.assetB);
+
+                                callBackFunction(err);
+                                return;
+
+                            }
+
+                            writeSubChannelsFile();
+
+                        }
+                        catch (err) {
+                            logger.write(MODULE_NAME, "[ERROR] start -> writeStandardChannelsFile -> onFileCreated -> err = " + err.message);
+                            callBackFunction(global.DEFAULT_FAIL_RESPONSE);
+                        }
+                    }
+                }
+                catch (err) {
+                    logger.write(MODULE_NAME, "[ERROR] start -> writeStandardChannelsFile -> err = " + err.message);
                     callBackFunction(global.DEFAULT_FAIL_RESPONSE);
                 }
             }
