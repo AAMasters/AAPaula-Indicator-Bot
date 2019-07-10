@@ -9,6 +9,7 @@
     const BOLLINGER_CHANNELS_FOLDER_NAME = "Bollinger-Channels";
     const BOLLINGER_STANDARD_CHANNELS_FOLDER_NAME = "Bollinger-Standard-Channels";
     const BOLLINGER_SUB_CHANNELS_FOLDER_NAME = "Bollinger-Sub-Channels";
+    const BOLLINGER_STANDARD_SUB_CHANNELS_FOLDER_NAME = "Bollinger-Standard-Sub-Channels";
 
     const commons = COMMONS.newCommons(bot, logger, UTILITIES);
 
@@ -54,6 +55,7 @@
             let channels = [];
             let standardChannels = [];
             let subChannels = [];
+            let standardSubChannels = [];
 
             dataFile = dataFiles[0]; // We only need the bollinger bands.
 
@@ -61,6 +63,7 @@
             commons.buildChannels(bands, channels, callBackFunction);
             commons.buildStandardChannels(bands, standardChannels, callBackFunction);
             commons.buildSubChannels(bands, subChannels, callBackFunction);
+            commons.buildStandardSubChannels(bands, standardSubChannels, callBackFunction);
 
             writeChannelsFile();
 
@@ -169,19 +172,7 @@
 
                         let channel = standardChannels[i];
 
-                        /*
-                            Here we have an special problem that occurs when an object spans several time peridos. If not taken care of
-                            it can happen that the object gets splitted between 2 days, which we dont want since it would loose some of
-                            its properties.
-
-                            To solve this issue, we wont save objects which ends at the last candle of the day, because we will save it
-                            at the next day, in whole, even if it starts in the previous day.
-                        */
-
-                        let lastInstantOdDay = currentDay.valueOf() + ONE_DAY_IN_MILISECONDS - 1;
-
-                        if (channel.end < currentDay.valueOf() - 1) { continue; }
-                        if (channel.end === lastInstantOdDay) { continue; }
+                        if (channel.end < currentDay.valueOf()) { continue; }
 
                         fileContent = fileContent + separator + '[' +
 
@@ -316,7 +307,7 @@
 
                             }
 
-                            callBackFunction(global.DEFAULT_OK_RESPONSE);
+                            writeStandardSubChannelsFile();
 
                         }
                         catch (err) {
@@ -331,6 +322,79 @@
                 }
             }
 
+            function writeStandardSubChannelsFile() {
+
+                try {
+
+                    if (FULL_LOG === true) { logger.write(MODULE_NAME, "[INFO] start -> writeStandardSubChannelsFile -> Entering function."); }
+
+                    let separator = "";
+                    let fileRecordCounter = 0;
+
+                    let fileContent = "";
+
+                    for (i = 0; i < standardSubChannels.length; i++) {
+
+                        let channel = standardSubChannels[i];
+
+                        if (channel.end < currentDay.valueOf()) { continue; }
+
+                        fileContent = fileContent + separator + '[' +
+
+                            channel.begin + "," +
+                            channel.end + "," +
+                            '"' + channel.direction + '"' + "," +
+                            '"' + channel.slope + '"' + "," +
+                            channel.period + "]";
+
+                        if (separator === "") { separator = ","; }
+
+                        fileRecordCounter++;
+                    }
+
+                    fileContent = "[" + fileContent + "]";
+
+                    let dateForPath = currentDay.getUTCFullYear() + '/' + utilities.pad(currentDay.getUTCMonth() + 1, 2) + '/' + utilities.pad(currentDay.getUTCDate(), 2);
+                    let fileName = '' + market.assetA + '_' + market.assetB + '.json';
+
+                    let filePathRoot = bot.devTeam + "/" + bot.codeName + "." + bot.version.major + "." + bot.version.minor + "/" + global.CLONE_EXECUTOR.codeName + "." + global.CLONE_EXECUTOR.version + "/" + global.EXCHANGE_NAME + "/" + bot.dataSetVersion;
+                    let filePath = filePathRoot + "/Output/" + BOLLINGER_STANDARD_SUB_CHANNELS_FOLDER_NAME + "/" + "Multi-Period-Daily" + "/" + outputPeriodLabel + "/" + dateForPath;
+                    filePath += '/' + fileName
+
+                    fileStorage.createTextFile(bot.devTeam, filePath, fileContent + '\n', onFileCreated);
+
+                    function onFileCreated(err) {
+
+                        try {
+
+                            if (FULL_LOG === true) { logger.write(MODULE_NAME, "[INFO] start -> writeStandardSubChannelsFile -> onFileCreated -> Entering function."); }
+                            if (LOG_FILE_CONTENT === true) { logger.write(MODULE_NAME, "[INFO] start -> writeStandardSubChannelsFile -> onFileCreated -> fileContent = " + fileContent); }
+
+                            if (err.result !== global.DEFAULT_OK_RESPONSE.result) {
+
+                                logger.write(MODULE_NAME, "[ERROR] start -> writeStandardSubChannelsFile -> onFileCreated -> err = " + err.message);
+                                logger.write(MODULE_NAME, "[ERROR] start -> writeStandardSubChannelsFile -> onFileCreated -> filePath = " + filePath);
+                                logger.write(MODULE_NAME, "[ERROR] start -> writeStandardSubChannelsFile -> onFileCreated -> market = " + market.assetA + "_" + market.assetB);
+
+                                callBackFunction(err);
+                                return;
+
+                            }
+
+                            callBackFunction(global.DEFAULT_OK_RESPONSE);
+
+                        }
+                        catch (err) {
+                            logger.write(MODULE_NAME, "[ERROR] start -> writeStandardSubChannelsFile -> onFileCreated -> err = " + err.message);
+                            callBackFunction(global.DEFAULT_FAIL_RESPONSE);
+                        }
+                    }
+                }
+                catch (err) {
+                    logger.write(MODULE_NAME, "[ERROR] start -> writeStandardSubChannelsFile -> err = " + err.message);
+                    callBackFunction(global.DEFAULT_FAIL_RESPONSE);
+                }
+            }
         }
         catch (err) {
             logger.write(MODULE_NAME, "[ERROR] start -> err = " + err.message);

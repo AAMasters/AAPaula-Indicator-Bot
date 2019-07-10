@@ -11,7 +11,8 @@
         buildBandsArray: buildBandsArray,
         buildChannels: buildChannels,
         buildStandardChannels: buildStandardChannels,
-        buildSubChannels: buildSubChannels
+        buildSubChannels: buildSubChannels,
+        buildStandardSubChannels: buildStandardSubChannels
     };
 
     return thisObject;
@@ -337,4 +338,40 @@
         }
     }
 
+    function buildStandardSubChannels(bands, standardSubChannels, callBackFunction) {
+
+        if (FULL_LOG === true) { logger.write(MODULE_NAME, "[INFO] buildStandardSubChannels -> Entering function."); }
+
+        try {
+
+            let period = 1
+
+            for (let i = 1; i < bands.length; i++) {
+
+                let channel;
+                let currentBand = bands[i];
+                let previousBand = bands[i - 1];
+
+                if (currentBand.direction === previousBand.direction && currentBand.slope === previousBand.slope) {
+                    period++
+                } else {
+                    period = 1
+                }
+
+                channel = {
+                    begin: currentBand.begin,
+                    end: currentBand.end,
+                    direction: currentBand.direction,
+                    slope: currentBand.slope,
+                    period: period
+                };
+
+                standardSubChannels.push(channel)
+            }
+        }
+        catch (err) {
+            logger.write(MODULE_NAME, "[ERROR] buildStandardSubChannels -> err = " + err.message);
+            callBackFunction(global.DEFAULT_FAIL_RESPONSE);
+        }
+    }
 };
