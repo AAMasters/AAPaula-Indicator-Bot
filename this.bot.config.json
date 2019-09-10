@@ -66,7 +66,8 @@
           },
           "product": "Bollinger-Bands",
           "dataSetVersion": "dataSet.V1",
-          "dataSet": "Multi-Period-Market"
+          "dataSet": "Multi-Period-Market",
+          "waitUntilNextUpdate": true
         }
       ]
     },
@@ -124,7 +125,8 @@
             "minor": 0
           },
           "process": "Multi-Period-Daily",
-          "dataSetVersion": "dataSet.V1"
+          "dataSetVersion": "dataSet.V1",
+          "waitUntilNextUpdate": true
         },
         {
           "devTeam": "AAMasters",
