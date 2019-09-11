@@ -35,7 +35,7 @@
             callBackFunction(global.DEFAULT_OK_RESPONSE);
 
         } catch (err) {
-            logger.write(MODULE_NAME, "[ERROR] initialize -> err = " + err.message);
+            logger.write(MODULE_NAME, "[ERROR] initialize -> err = " + err.stack);
             callBackFunction(global.DEFAULT_FAIL_RESPONSE);
         }
     }
@@ -116,7 +116,7 @@
 
                             if (err.result !== global.DEFAULT_OK_RESPONSE.result) {
 
-                                logger.write(MODULE_NAME, "[ERROR] start -> writeChannelsFile -> onFileCreated -> err = " + err.message);
+                                logger.write(MODULE_NAME, "[ERROR] start -> writeChannelsFile -> onFileCreated -> err = " + err.stack);
                                 logger.write(MODULE_NAME, "[ERROR] start -> writeChannelsFile -> onFileCreated -> filePath = " + filePath);
                                 logger.write(MODULE_NAME, "[ERROR] start -> writeChannelsFile -> onFileCreated -> market = " + market.assetA + "_" + market.assetB);
 
@@ -129,13 +129,13 @@
 
                         }
                         catch (err) {
-                            logger.write(MODULE_NAME, "[ERROR] start -> writeChannelsFile -> onFileCreated -> err = " + err.message);
+                            logger.write(MODULE_NAME, "[ERROR] start -> writeChannelsFile -> onFileCreated -> err = " + err.stack);
                             callBackFunction(global.DEFAULT_FAIL_RESPONSE);
                         }
                     }
                 }
                 catch (err) {
-                    logger.write(MODULE_NAME, "[ERROR] start -> writeChannelsFile -> err = " + err.message);
+                    logger.write(MODULE_NAME, "[ERROR] start -> writeChannelsFile -> err = " + err.stack);
                     callBackFunction(global.DEFAULT_FAIL_RESPONSE);
                 }
             }
@@ -187,7 +187,7 @@
 
                             if (err.result !== global.DEFAULT_OK_RESPONSE.result) {
 
-                                logger.write(MODULE_NAME, "[ERROR] start -> writeStandardChannelsFile -> onFileCreated -> err = " + err.message);
+                                logger.write(MODULE_NAME, "[ERROR] start -> writeStandardChannelsFile -> onFileCreated -> err = " + err.stack);
                                 logger.write(MODULE_NAME, "[ERROR] start -> writeStandardChannelsFile -> onFileCreated -> filePath = " + filePath);
                                 logger.write(MODULE_NAME, "[ERROR] start -> writeStandardChannelsFile -> onFileCreated -> market = " + market.assetA + "_" + market.assetB);
 
@@ -200,13 +200,13 @@
 
                         }
                         catch (err) {
-                            logger.write(MODULE_NAME, "[ERROR] start -> writeStandardChannelsFile -> onFileCreated -> err = " + err.message);
+                            logger.write(MODULE_NAME, "[ERROR] start -> writeStandardChannelsFile -> onFileCreated -> err = " + err.stack);
                             callBackFunction(global.DEFAULT_FAIL_RESPONSE);
                         }
                     }
                 }
                 catch (err) {
-                    logger.write(MODULE_NAME, "[ERROR] start -> writeStandardChannelsFile -> err = " + err.message);
+                    logger.write(MODULE_NAME, "[ERROR] start -> writeStandardChannelsFile -> err = " + err.stack);
                     callBackFunction(global.DEFAULT_FAIL_RESPONSE);
                 }
             }
@@ -263,7 +263,7 @@
 
                             if (err.result !== global.DEFAULT_OK_RESPONSE.result) {
 
-                                logger.write(MODULE_NAME, "[ERROR] start -> writeSubChannelsFile -> onFileCreated -> err = " + err.message);
+                                logger.write(MODULE_NAME, "[ERROR] start -> writeSubChannelsFile -> onFileCreated -> err = " + err.stack);
                                 logger.write(MODULE_NAME, "[ERROR] start -> writeSubChannelsFile -> onFileCreated -> filePath = " + filePath);
                                 logger.write(MODULE_NAME, "[ERROR] start -> writeSubChannelsFile -> onFileCreated -> market = " + market.assetA + "_" + market.assetB);
 
@@ -276,13 +276,13 @@
 
                         }
                         catch (err) {
-                            logger.write(MODULE_NAME, "[ERROR] start -> writeSubChannelsFile -> onFileCreated -> err = " + err.message);
+                            logger.write(MODULE_NAME, "[ERROR] start -> writeSubChannelsFile -> onFileCreated -> err = " + err.stack);
                             callBackFunction(global.DEFAULT_FAIL_RESPONSE);
                         }
                     }
                 }
                 catch (err) {
-                    logger.write(MODULE_NAME, "[ERROR] start -> writeSubChannelsFile -> err = " + err.message);
+                    logger.write(MODULE_NAME, "[ERROR] start -> writeSubChannelsFile -> err = " + err.stack);
                     callBackFunction(global.DEFAULT_FAIL_RESPONSE);
                 }
             }
@@ -335,7 +335,7 @@
 
                             if (err.result !== global.DEFAULT_OK_RESPONSE.result) {
 
-                                logger.write(MODULE_NAME, "[ERROR] start -> writeStandardSubChannelsFile -> onFileCreated -> err = " + err.message);
+                                logger.write(MODULE_NAME, "[ERROR] start -> writeStandardSubChannelsFile -> onFileCreated -> err = " + err.stack);
                                 logger.write(MODULE_NAME, "[ERROR] start -> writeStandardSubChannelsFile -> onFileCreated -> filePath = " + filePath);
                                 logger.write(MODULE_NAME, "[ERROR] start -> writeStandardSubChannelsFile -> onFileCreated -> market = " + market.assetA + "_" + market.assetB);
 
@@ -348,20 +348,20 @@
 
                         }
                         catch (err) {
-                            logger.write(MODULE_NAME, "[ERROR] start -> writeSubChannelsFile -> onFileCreated -> err = " + err.message);
+                            logger.write(MODULE_NAME, "[ERROR] start -> writeSubChannelsFile -> onFileCreated -> err = " + err.stack);
                             callBackFunction(global.DEFAULT_FAIL_RESPONSE);
                         }
                     }
                 }
                 catch (err) {
-                    logger.write(MODULE_NAME, "[ERROR] start -> writeSubChannelsFile -> err = " + err.message);
+                    logger.write(MODULE_NAME, "[ERROR] start -> writeSubChannelsFile -> err = " + err.stack);
                     callBackFunction(global.DEFAULT_FAIL_RESPONSE);
                 }
             }
 
         }
         catch (err) {
-            logger.write(MODULE_NAME, "[ERROR] start -> err = " + err.message);
+            logger.write(MODULE_NAME, "[ERROR] start -> err = " + err.stack);
             callBackFunction(global.DEFAULT_FAIL_RESPONSE);
         }
     }

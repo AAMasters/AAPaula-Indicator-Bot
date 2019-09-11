@@ -176,7 +176,7 @@
             }
         }
         catch (err) {
-            logger.write(MODULE_NAME, "[ERROR] buildChannels -> err = " + err.message);
+            logger.write(MODULE_NAME, "[ERROR] buildChannels -> err = " + err.stack);
             callBackFunction(global.DEFAULT_FAIL_RESPONSE);
         }
     }
@@ -212,7 +212,7 @@
             }
         }
         catch (err) {
-            logger.write(MODULE_NAME, "[ERROR] buildStandardChannels -> err = " + err.message);
+            logger.write(MODULE_NAME, "[ERROR] buildStandardChannels -> err = " + err.stack);
             callBackFunction(global.DEFAULT_FAIL_RESPONSE);
         }
     }
@@ -333,7 +333,7 @@
             }
         }
         catch (err) {
-            logger.write(MODULE_NAME, "[ERROR] buildSubChannels -> err = " + err.message);
+            logger.write(MODULE_NAME, "[ERROR] buildSubChannels -> err = " + err.stack);
             callBackFunction(global.DEFAULT_FAIL_RESPONSE);
         }
     }
@@ -370,7 +370,7 @@
             }
         }
         catch (err) {
-            logger.write(MODULE_NAME, "[ERROR] buildStandardSubChannels -> err = " + err.message);
+            logger.write(MODULE_NAME, "[ERROR] buildStandardSubChannels -> err = " + err.stack);
             callBackFunction(global.DEFAULT_FAIL_RESPONSE);
         }
     }
