@@ -38,6 +38,24 @@
       "retryWaitTime": 10000,
       "sleepWaitTime": 3600000,
       "comaWaitTime": 86400000,
+      "updatesDatasets": [
+        {
+          "product": "Bollinger-Channels",
+          "dataSet": "Multi-Period-Market"
+        },
+        {
+          "product": "Bollinger-Standard-Channels",
+          "dataSet": "Multi-Period-Market"
+        },
+        {
+          "product": "Bollinger-Sub-Channels",
+          "dataSet": "Multi-Period-Market"
+        },
+        {
+          "product": "Bollinger-Standard-Sub-Channels",
+          "dataSet": "Multi-Period-Market"
+        }
+      ],
       "framework": {
         "name": "Multi-Period-Market",
         "startDate": {
@@ -109,6 +127,24 @@
       "retryWaitTime": 10000,
       "sleepWaitTime": 3600000,
       "comaWaitTime": 86400000,
+      "updatesDatasets": [
+        {
+          "product": "Bollinger-Channels",
+          "dataSet": "Multi-Period-Daily"
+        },
+        {
+          "product": "Bollinger-Standard-Channels",
+          "dataSet": "Multi-Period-Daily"
+        },
+        {
+          "product": "Bollinger-Sub-Channels",
+          "dataSet": "Multi-Period-Daily"
+        },
+        {
+          "product": "Bollinger-Standard-Sub-Channels",
+          "dataSet": "Multi-Period-Daily"
+        }
+      ],
       "framework": {
         "name": "Multi-Period-Daily",
         "startDate": {
