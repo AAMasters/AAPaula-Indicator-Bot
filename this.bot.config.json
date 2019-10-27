@@ -1,7 +1,7 @@
 {
   "displayName": "Paula",
   "codeName": "AAPaula",
-  "type": "Indicator",
+  "type": "Indicator Bot",
   "version": {
     "major": 1,
     "minor": 0,
@@ -96,7 +96,31 @@
           },
           "product": "Bollinger-Bands",
           "dataSetVersion": "dataSet.V1",
-          "dataSet": "Multi-Period-Market"
+          "dataSet": "Multi-Period-Market",
+          "singlularVariableName": "bollingerBand",
+          "pluralVariableName": "bollingerBands",
+          "recordDefinition": [
+            {
+              "name": "begin",
+              "isNumeric": true
+            },
+            {
+              "name": "end",
+              "isNumeric": true
+            },
+            {
+              "name": "movingAverage",
+              "isNumeric": true
+            },
+            {
+              "name": "standardDeviation",
+              "isNumeric": true
+            },
+            {
+              "name": "deviation",
+              "isNumeric": true
+            }
+          ]
         }
       ]
     },
@@ -197,7 +221,31 @@
           },
           "product": "Bollinger-Bands",
           "dataSetVersion": "dataSet.V1",
-          "dataSet": "Multi-Period-Daily"
+          "dataSet": "Multi-Period-Daily",
+          "singlularVariableName": "bollingerBand",
+          "pluralVariableName": "bollingerBands",
+          "recordDefinition": [
+            {
+              "name": "begin",
+              "isNumeric": true
+            },
+            {
+              "name": "end",
+              "isNumeric": true
+            },
+            {
+              "name": "movingAverage",
+              "isNumeric": true
+            },
+            {
+              "name": "standardDeviation",
+              "isNumeric": true
+            },
+            {
+              "name": "deviation",
+              "isNumeric": true
+            }
+          ]
         }
       ]
     }
@@ -207,8 +255,41 @@
       "codeName": "Bollinger-Channels",
       "displayName": "Bollinger-Channels",
       "description": "Two sets of files per period that contains band-channel patterns.",
-      "storageAccount": "aatom",
       "shareWith": "Public",
+      "recordDefinition": [
+        {
+          "name": "begin",
+          "isNumeric": true
+        },
+        {
+          "name": "end",
+          "isNumeric": true
+        },
+        {
+          "name": "direction",
+          "isNumeric": false
+        },
+        {
+          "name": "period",
+          "isNumeric": true
+        },
+        {
+          "name": "firstMovingAverage",
+          "isNumeric": true
+        },
+        {
+          "name": "lastMovingAverage",
+          "isNumeric": true
+        },
+        {
+          "name": "firstDeviation",
+          "isNumeric": true
+        },
+        {
+          "name": "lastDeviation",
+          "isNumeric": true
+        }
+      ],
       "dataSets": [
         {
           "codeName": "Multi-Period-Market",
