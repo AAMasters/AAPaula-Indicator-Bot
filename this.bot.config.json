@@ -254,7 +254,7 @@
     {
       "codeName": "Bollinger-Channels",
       "displayName": "Bollinger-Channels",
-      "description": "Two sets of files per period that contains band-channel patterns.",
+      "description": "Two sets of files per period that contains Bollinger-Bands-Channels-Patterns.",
       "shareWith": "Public",
       "recordDefinition": [
         {
