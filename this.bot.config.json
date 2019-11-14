@@ -82,8 +82,7 @@
             "minor": 0
           },
           "process": "Multi-Period-Market",
-          "dataSetVersion": "dataSet.V1",
-          "waitUntilNextUpdate": true
+          "dataSetVersion": "dataSet.V1"
         }
       ],
       "dataDependencies": [
